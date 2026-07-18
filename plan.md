@@ -341,7 +341,7 @@ The adapter returns:
 { similarityScore: number | null; provider: string; rawResult?: object }
 ```
 
-Verdict policy is transparent and configurable: score `>= 0.85` -> `PASS`; score `< 0.85` -> `REVIEW_REQUIRED`; unavailable/failed inference -> `UNAVAILABLE`. The displayed message must say this is a visual similarity signal, not a guarantee that no damage exists.
+Verdict policy is transparent and configurable: score `>= 0.70` -> `PASS`; score `< 0.70` -> `REVIEW_REQUIRED`; unavailable/failed inference -> `UNAVAILABLE`. The displayed message must say this is a visual similarity signal, not a guarantee that no damage exists.
 
 The live pretrained model is the normal demo path. `VISION_MODE=mock` is allowed only for automated tests or an explicit offline fallback; the UI must label it as simulated and it must never be presented as AI output. Before the demo, preload the model and test it using two matching images and one clearly different image so first-download delays do not interrupt the presentation.
 

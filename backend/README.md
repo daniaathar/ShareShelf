@@ -21,7 +21,7 @@ The health endpoint is `GET http://localhost:4000/api/v1/health`.
 
 ## Vision workflow
 
-With `VISION_MODE=live`, the backend loads `Xenova/clip-vit-base-patch32` on first startup. For every return upload it creates embeddings for the pickup and return images, calculates cosine similarity, and records `PASS` for scores of at least `0.85`; lower scores receive `REVIEW_REQUIRED`.
+With `VISION_MODE=live`, the backend loads `Xenova/clip-vit-base-patch32` on first startup. For every return upload it creates embeddings for the pickup and return images, calculates cosine similarity, and records `PASS` for scores of at least `0.70`; lower scores receive `REVIEW_REQUIRED`.
 
 `VISION_MODE=mock` is only for offline automated testing. It must not be used as an unlabeled demo result.
 

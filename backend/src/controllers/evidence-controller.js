@@ -18,7 +18,7 @@ export async function upload(req, res) {
   if (phase === 'PICKUP') return res.status(201).json({ data: { evidence } });
   const pickup = currentEvidence(booking, 'PICKUP');
   try {
-    const result = await compareImages(pickup.url, evidence.url); const verdict = result.similarityScore >= 0.85 ? 'PASS' : 'REVIEW_REQUIRED';
+    const result = await compareImages(pickup.url, evidence.url); const verdict = result.similarityScore >= 0.70 ? 'PASS' : 'REVIEW_REQUIRED';
     const comparison = await prisma.conditionComparison.create({ data: { bookingId: booking.id, pickupEvidenceId: pickup.id, returnEvidenceId: evidence.id, similarityScore: result.similarityScore, verdict, provider: result.provider, providerResultJson: result.rawResult } });
     return res.status(201).json({ data: { evidence, comparison } });
   } catch (error) {
