@@ -1,0 +1,30 @@
+{
+  "name": "shareshelf-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:seed": "node prisma/seed.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@huggingface/transformers": "^3.7.2",
+    "@prisma/client": "^6.19.1",
+    "bcryptjs": "^3.0.2",
+    "cloudinary": "^2.7.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.2",
+    "zod": "^4.1.12"
+  },
+  "devDependencies": {
+    "@prisma/debug": "^6.19.1",
+    "prisma": "^6.19.1"
+  }
+}
