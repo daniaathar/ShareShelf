@@ -13,6 +13,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const links = [
+  { to: "/", label: "Home" },
   { to: "/browse", label: "Browse" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
@@ -64,8 +65,8 @@ export function Navbar() {
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem onClick={() => navigate("/")}>Dashboard</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => navigate("/")}>My Listings</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/dashboard")}>Dashboard</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate("/dashboard/listings")}>My Listings</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={logout} className="text-destructive focus:text-destructive">
                   Sign out

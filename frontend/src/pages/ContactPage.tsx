@@ -9,8 +9,8 @@ export function ContactPage() {
       <div className="mt-10 grid gap-4 sm:grid-cols-3">
         {[
           { icon: Mail, label: "Email", value: "hello@shareshelf.app" },
-          { icon: Phone, label: "Phone", value: "+1 (555) 010-2040" },
-          { icon: MapPin, label: "HQ", value: "Brooklyn, NY" },
+          { icon: Phone, label: "Phone", value: "+341 7654321" },
+          { icon: MapPin, label: "HQ", value: "Lahore, Pakistan" },
         ].map((c) => (
           <div key={c.label} className="rounded-2xl border border-border bg-card p-5">
             <c.icon className="h-5 w-5 text-primary" />
