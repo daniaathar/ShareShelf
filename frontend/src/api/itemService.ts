@@ -38,6 +38,10 @@ export const itemService = {
     const res = await apiClient.patch<ApiEnvelope<Item>>(`/items/${itemId}`, payload);
     return unwrap(res);
   },
+  archive: async (itemId: string): Promise<Item> => {
+  const res = await apiClient.delete<ApiEnvelope<Item>>(`/items/${itemId}`);
+  return unwrap(res);
+  },
   addImage: async (itemId: string, file: File): Promise<ItemImage> => {
     const fd = new FormData();
     fd.append("image", file);

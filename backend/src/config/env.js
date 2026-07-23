@@ -9,7 +9,7 @@ export const env = {
   port: Number(process.env.PORT || 4000),
   databaseUrl: process.env.DATABASE_URL,
   jwtSecret: process.env.JWT_SECRET || 'development-only-secret-change-me',
-  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '30m',
   clientOrigin: process.env.CLIENT_ORIGIN || 'http://localhost:5173',
   visionMode: process.env.VISION_MODE || 'live',
   visionModel: process.env.VISION_MODEL || 'Xenova/clip-vit-base-patch32',
