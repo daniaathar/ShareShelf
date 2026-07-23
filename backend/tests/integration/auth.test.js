@@ -57,3 +57,20 @@ it('rejects registration when required fields are missing', async () => {
 
   expect(response.status).toBe(400);
 });
+
+it('rate limits excessive authentication attempts', async () => {
+  const responses = [];
+
+  for (let i = 0; i < 11; i++) {
+    const response = await request(app)
+      .post('/api/v1/auth/login')
+      .send({
+        email: 'rate-limit-test@example.com',
+        password: 'wrong-password',
+      });
+
+    responses.push(response.status);
+  }
+
+  expect(responses).toContain(429);
+});

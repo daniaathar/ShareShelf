@@ -1,5 +1,7 @@
 import multer from 'multer';
 import { ZodError } from 'zod';
+
+import { logger } from '../config/logger.js';
 import { AppError } from '../utils/app-error.js';
 
 export function notFound(req, _res, next) {
@@ -7,20 +9,36 @@ export function notFound(req, _res, next) {
     new AppError(
       404,
       'NOT_FOUND',
-      `Route ${req.method} ${req.path} was not found`
-    )
+      `Route ${req.method} ${req.path} was not found`,
+    ),
   );
 }
 
-export function errorHandler(error, _req, res, _next) {
+export function errorHandler(error, req, res, _next) {
+  const requestId = req.requestId;
+
+  // Log every server-side error with its request ID
+  logger.error(
+    {
+      requestId,
+      method: req.method,
+      path: req.originalUrl,
+      errorName: error.name,
+      errorMessage: error.message,
+      stack: error.stack,
+    },
+    'Request failed',
+  );
+
   // Zod validation errors
   if (error instanceof ZodError) {
     return res.status(400).json({
       error: {
         code: 'VALIDATION_ERROR',
         message: 'Request validation failed',
-        fields: error.flatten().fieldErrors
-      }
+        fields: error.flatten().fieldErrors,
+        requestId,
+      },
     });
   }
 
@@ -30,16 +48,18 @@ export function errorHandler(error, _req, res, _next) {
       return res.status(400).json({
         error: {
           code: 'FILE_TOO_LARGE',
-          message: 'Image must be 8 MB or smaller'
-        }
+          message: 'Image must be 8 MB or smaller',
+          requestId,
+        },
       });
     }
 
     return res.status(400).json({
       error: {
         code: 'FILE_UPLOAD_ERROR',
-        message: 'There was a problem uploading the file'
-      }
+        message: 'There was a problem uploading the file',
+        requestId,
+      },
     });
   }
 
@@ -49,18 +69,18 @@ export function errorHandler(error, _req, res, _next) {
       error: {
         code: error.code,
         message: error.message,
-        fields: error.fields
-      }
+        fields: error.fields,
+        requestId,
+      },
     });
   }
 
   // Unexpected errors
-  console.error(error);
-
   return res.status(500).json({
     error: {
       code: 'INTERNAL_ERROR',
-      message: 'An unexpected error occurred'
-    }
+      message: 'An unexpected error occurred',
+      requestId,
+    },
   });
 }

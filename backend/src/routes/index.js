@@ -8,6 +8,7 @@ import { requireAuth } from '../middleware/auth.js';
 import { authRateLimiter } from '../middleware/security.js';
 import { asyncHandler } from '../utils/async-handler.js';
 import { AppError } from '../utils/app-error.js';
+import { validateUuidParam } from '../middleware/validate-id.js';
 
 const router = express.Router();
 
@@ -100,12 +101,14 @@ router.get(
 router.get(
   '/bookings/:bookingId',
   requireAuth,
+  validateUuidParam('bookingId'),
   asyncHandler(bookings.get),
 );
 
 router.post(
   '/bookings/:bookingId/mock-payment',
   requireAuth,
+  validateUuidParam('bookingId'),
   asyncHandler(bookings.pay),
 );
 
@@ -118,6 +121,7 @@ router.post(
 router.post(
   '/bookings/:bookingId/evidence/:phase',
   requireAuth,
+  validateUuidParam('bookingId'),
   upload.single('image'),
   asyncHandler(evidence.upload),
 );
@@ -125,6 +129,7 @@ router.post(
 router.get(
   '/bookings/:bookingId/comparison',
   requireAuth,
+  validateUuidParam('bookingId'),
   asyncHandler(evidence.comparison),
 );
 
